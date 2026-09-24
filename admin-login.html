@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CharmingHub Admin Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff8fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-box {
+            background: white;
+            width: 350px;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+
+        h1 {
+            color: #e91e63;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 7px;
+            background: #e91e63;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d81b60;
+        }
+
+        #message {
+            margin-top: 15px;
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>CharmingHub 🔐</h1>
+
+        <h2>Admin Login</h2>
+
+        <form id="admin-login-form">
+
+            <input
+                type="email"
+                id="admin-email"
+                placeholder="Admin Email"
+                required
+            >
+
+            <input
+                type="password"
+                id="admin-password"
+                placeholder="Password"
+                required
+            >
+
+            <button type="submit">
+                🔐 Login
+            </button>
+
+        </form>
+
+        <p id="message"></p>
+
+    </div>
+
+    <script src="admin-login.js"></script>
+
+</body>
+
+</html>

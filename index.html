@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CharmingHub - Handmade Jewellery & Customized Gifts 🌸</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        ✨ Free Shipping on orders over ₹499 | Handcrafted with love & personalized just for you! 🎁
+    </div>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#home" class="logo-link">
+                    <img
+                        src="images/logo.png.jpeg"
+                        alt="CharmingHub"
+                        onerror="this.style.display='none'; document.getElementById('logo-fallback-text').style.display='inline-block';"
+                    >
+                    <span id="logo-fallback-text" class="logo-text">CharmingHub 🌸</span>
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Shop</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#custom">Custom Gifts</a></li>
+                <li><a href="#track-section">Track Order</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button type="button" id="nav-auth-btn" class="nav-btn auth-btn" onclick="openAuthModal()">
+                    <span id="nav-user-icon">👤</span>
+                    <span id="nav-user-text">Login / Signup</span>
+                </button>
+
+                <button type="button" id="nav-cart-btn" class="nav-btn cart-btn" onclick="scrollToCart()">
+                    🛒 Cart (<span id="cart-count">0</span>)
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-text">
+            <p class="small-heading">MADE WITH LOVE & CARE ❤️</p>
+            <h1>
+                Gifts that make
+                <span>memories bloom.</span>
+            </h1>
+            <p>
+                Discover gorgeous handmade earrings, customized jewellery, personalized gift hampers, and artisanal treasures crafted especially for your loved ones.
+            </p>
+            <div class="hero-btns">
+                <a href="#products" class="shop-btn">
+                    Explore Collection →
+                </a>
+                <a href="#custom" class="custom-link-btn">
+                    ✨ Customize a Gift
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-image-wrap">
+            <div class="hero-image">
+                <img
+                    src="images/Gift Hamper.png.jpeg"
+                    alt="CharmingHub Gift Hamper"
+                    onerror="this.parentElement.innerHTML='🎁';"
+                >
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="categories">
+        <p class="small-heading">CURATED SELECTION</p>
+        <h2>Shop By Category</h2>
+
+        <div class="category-container">
+            <div class="category-card" onclick="selectCategoryCard('Earrings')">
+                <div class="category-icon">💎</div>
+                <h3>Earrings</h3>
+                <p>Beautiful, lightweight handmade earrings</p>
+                <span class="cat-pill">Shop Earrings →</span>
+            </div>
+
+            <div class="category-card" onclick="selectCategoryCard('Gifts')">
+                <div class="category-icon">🎁</div>
+                <h3>Customized Gifts</h3>
+                <p>Personalized hampers & inscribed memories</p>
+                <span class="cat-pill">Personalize →</span>
+            </div>
+
+            <div class="category-card" onclick="selectCategoryCard('Handmade')">
+                <div class="category-icon">🧶</div>
+                <h3>Handmade Crafts</h3>
+                <p>Mithila art bags, crochet & unique treasures</p>
+                <span class="cat-pill">View Crafts →</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="section-title-wrap">
+            <p class="small-heading">OUR EXCLUSIVE CATALOG</p>
+            <h2>Handcrafted Bestsellers 🌸</h2>
+            <p class="section-subtitle">Browse through our artisan collection. Filter by category or search for your favorite styles.</p>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="shop-controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input
+                    type="text"
+                    id="product-search"
+                    placeholder="Search jewellery, earrings, gifts, handmade items..."
+                    autocomplete="off"
+                >
+                <button
+                    type="button"
+                    id="clear-search-btn"
+                    class="clear-search-btn"
+                    onclick="clearProductSearch()"
+                >&times;</button>
+            </div>
+
+            <div class="category-filters">
+                <button type="button" class="filter-btn active" data-category="ALL" onclick="filterByCategory('ALL', this)">All</button>
+                <button type="button" class="filter-btn" data-category="Earrings" onclick="filterByCategory('Earrings', this)">💎 Earrings</button>
+                <button type="button" class="filter-btn" data-category="Jewellery" onclick="filterByCategory('Jewellery', this)">✨ Jewellery</button>
+                <button type="button" class="filter-btn" data-category="Gifts" onclick="filterByCategory('Gifts', this)">🎁 Gifts</button>
+                <button type="button" class="filter-btn" data-category="Handmade" onclick="filterByCategory('Handmade', this)">🧶 Handmade</button>
+            </div>
+        </div>
+
+        <div class="product-results-info">
+            <span id="product-count-badge">Loading collection...</span>
+        </div>
+
+        <!-- Products Dynamic Container -->
+        <div class="product-container" id="product-container">
+            <p style="grid-column: 1 / -1; text-align: center; color: #888; padding: 40px;">
+                Loading CharmingHub products...
+            </p>
+        </div>
+    </section>
+
+    <!-- Customized Gifts Interactive Section -->
+    <section id="custom" class="custom-section">
+        <div class="custom-content">
+            <p class="small-heading">MAKE IT PERSONAL ✨</p>
+            <h2>Create Something Special</h2>
+            <p>
+                Add names, special dates, loving messages, or photo cards to create a gift that will be cherished forever.
+            </p>
+
+            <form id="custom-gift-form" class="custom-gift-form">
+                <div class="custom-form-grid">
+                    <div class="custom-field">
+                        <label for="custom-name">Recipient's Name / Inscription *</label>
+                        <input
+                            type="text"
+                            id="custom-name"
+                            placeholder="e.g. Richa, Sneha & Priya, or Mom"
+                            required
+                        >
+                    </div>
+
+                    <div class="custom-field">
+                        <label for="custom-type">Item Style *</label>
+                        <select id="custom-type" required>
+                            <option value="Personalized Gift Hamper">Personalized Gift Hamper (₹699)</option>
+                            <option value="Custom Name Pendant">Custom Name Pendant (₹599)</option>
+                            <option value="Hand-painted Mithila Tote">Hand-painted Mithila Tote (₹499)</option>
+                            <option value="Custom Earrings Set">Custom Earrings Set (₹399)</option>
+                        </select>
+                    </div>
+
+                    <div class="custom-field full">
+                        <label for="custom-note">Custom Note / Occasion / Instructions</label>
+                        <textarea
+                            id="custom-note"
+                            placeholder="Add your heartfelt message, preferred gift wrap color, or birthday/anniversary note..."
+                            rows="3"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" id="add-custom-gift-btn" class="custom-btn">
+                    ✨ Add Personalized Gift to Cart
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Section -->
+    <section id="cart-section" class="cart-section">
+        <h2>Your Shopping Cart 🛒</h2>
+
+        <div id="cart-items" class="cart-items-container">
+            <p>Your cart is empty.</p>
+        </div>
+
+        <div class="cart-summary-box">
+            <div class="cart-total">
+                <strong>Total Amount: ₹<span id="cart-total">0</span></strong>
+            </div>
+
+            <button id="checkout-btn" class="checkout-btn" onclick="openCheckoutSection()">
+                Proceed to Checkout 🛍️
+            </button>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkout-section" class="checkout-section">
+        <h2>Checkout & Delivery Details 🛍️</h2>
+
+        <form id="checkout-form" class="checkout-form-container">
+            <div class="checkout-grid">
+                <div class="form-group">
+                    <label for="customer-name">Full Name *</label>
+                    <input
+                        type="text"
+                        id="customer-name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="customer-email">Email Address *</label>
+                    <input
+                        type="email"
+                        id="customer-email"
+                        placeholder="your.email@example.com (for order updates)"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="customer-phone">Phone Number *</label>
+                    <input
+                        type="tel"
+                        id="customer-phone"
+                        placeholder="10-digit mobile number"
+                        pattern="[0-9]{10}"
+                        title="Please enter a valid 10-digit phone number"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="customer-city">City *</label>
+                    <input
+                        type="text"
+                        id="customer-city"
+                        placeholder="e.g. Patna, Delhi, Mumbai"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="customer-pincode">Pincode *</label>
+                    <input
+                        type="text"
+                        id="customer-pincode"
+                        placeholder="6-digit postal pincode"
+                        pattern="[0-9]{6}"
+                        title="Please enter a valid 6-digit postal code"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="payment-method">Payment Method *</label>
+                    <select id="payment-method" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="COD">Cash on Delivery (COD)</option>
+                        <option value="ONLINE">Online Payment (UPI / Cards / NetBanking via Razorpay)</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="customer-address">Complete Delivery Address *</label>
+                    <textarea
+                        id="customer-address"
+                        placeholder="House / Flat No., Street, Landmark..."
+                        rows="3"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+
+            <!-- Online Payment Notice -->
+            <div id="online-payment-info" class="payment-notice" style="display: none;">
+                <p><strong>🔒 Secure Razorpay Checkout:</strong> Pay instantly using UPI (Google Pay, PhonePe, Paytm), Debit/Credit Cards, or NetBanking. Official Razorpay modal will open when you click Place Order.</p>
+            </div>
+
+            <div class="checkout-actions">
+                <button type="submit" id="place-order-btn" class="place-order-btn">
+                    Place Order 🛍️
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Order Success Confirmation Screen -->
+    <section id="order-success" class="order-success" style="display: none;">
+        <div class="success-box">
+            <div class="success-icon">🎉</div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for shopping with CharmingHub! Your order is being handcrafted with love. ❤️</p>
+
+            <div class="order-info">
+                <p><strong>Order ID:</strong> <span id="success-order-id" class="highlight-id"></span></p>
+                <p><strong>Total Amount:</strong> ₹<span id="success-order-total"></span></p>
+                <p><strong>Payment Method:</strong> <span id="success-payment-method"></span></p>
+                <p><strong>Payment Status:</strong> <span id="success-payment-status" class="badge"></span></p>
+            </div>
+
+            <!-- Visual Tracking Stepper for Placed Order -->
+            <div class="order-tracking-wrap">
+                <h4>Order Progress</h4>
+                <div id="success-order-tracker" class="tracker-stepper">
+                    <!-- Dynamically filled with tracker steps -->
+                </div>
+            </div>
+
+            <div class="success-actions">
+                <button type="button" class="btn-primary" onclick="continueShopping()">
+                    🛍️ Continue Shopping
+                </button>
+                <button type="button" class="btn-secondary" onclick="viewMyOrders()">
+                    📦 View All My Orders
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Tracking & Customer Orders Section -->
+    <section id="track-section" class="track-section">
+        <p class="small-heading">ORDER STATUS & HISTORY</p>
+        <h2>Track Your Order 🚚</h2>
+
+        <div class="track-lookup-card">
+            <p>Look up any order using your Order ID or registered Email address:</p>
+            <div class="lookup-input-group">
+                <input
+                    type="text"
+                    id="track-input"
+                    placeholder="Enter Order ID (e.g. 6a98...) or your Email address"
+                >
+                <button type="button" id="track-btn" class="lookup-btn" onclick="lookupOrder()">
+                    🔍 Track Order
+                </button>
+            </div>
+            <div id="track-lookup-results"></div>
+        </div>
+
+        <!-- Authenticated Customer Orders -->
+        <div id="my-orders" class="my-orders-block">
+            <h3>My Orders 📦</h3>
+            <div id="orders-container">
+                <p style="color: #888;">Log in to view your full order history.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>Why Choose CharmingHub?</h2>
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">❤️</div>
+                <h3>Made With Love</h3>
+                <p>Every piece is uniquely designed and hand-crafted with utmost care and attention.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">✨</div>
+                <h3>Unique & Personalized</h3>
+                <p>Custom inscriptions, hampers, and styles you won't find anywhere else.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🎁</div>
+                <h3>Perfect For Memories</h3>
+                <p>Made to celebrate birthdays, anniversaries, friendships, and cherished moments.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>CharmingHub 🌸</h2>
+                <p>Handmade with love. Created for memories.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#products">Shop</a>
+                <a href="#custom">Custom Gifts</a>
+                <a href="#track-section">Track Order</a>
+                <a href="policies.html">Store Policies & Contact</a>
+                <a href="admin-login.html" target="_blank">Admin Portal 🔐</a>
+            </div>
+        </div>
+        <p class="copyright">© 2026 CharmingHub. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Customer Auth Modal (Login / Register / Account) -->
+    <div id="auth-modal" class="auth-modal-overlay">
+        <div class="auth-modal-box">
+            <button type="button" class="auth-close-btn" onclick="closeAuthModal()">&times;</button>
+
+            <!-- State 1: Login / Signup Tabs -->
+            <div id="auth-forms-view">
+                <div class="auth-tabs">
+                    <button type="button" id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                    <button type="button" id="tab-signup" class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h3>Welcome Back! 👋</h3>
+                    <div class="auth-field">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">🔐 Login to CharmingHub</button>
+                    <p id="login-message" class="auth-message"></p>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form" style="display: none;">
+                    <h3>Create Your Account 🌸</h3>
+                    <div class="auth-field">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email address" required>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a secure password" minlength="6" required>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">✨ Create Free Account</button>
+                    <p id="signup-message" class="auth-message"></p>
+                </form>
+            </div>
+
+            <!-- State 2: Account Overview (When Logged In) -->
+            <div id="account-section" class="account-view" style="display: none;">
+                <div class="account-header">
+                    <span class="user-avatar">👤</span>
+                    <h3>My CharmingHub Account</h3>
+                </div>
+
+                <div class="account-details">
+                    <p><strong>Name:</strong> <span id="account-name"></span></p>
+                    <p><strong>Email:</strong> <span id="account-email"></span></p>
+                </div>
+
+                <div class="account-actions">
+                    <button type="button" class="btn-primary" onclick="viewMyOrdersFromAccount()">
+                        📦 View My Orders
+                    </button>
+                    <button type="button" id="logout-btn" class="btn-outline">
+                        🚪 Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Toast Notification Container -->
+    <div id="store-toast" class="store-toast"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
