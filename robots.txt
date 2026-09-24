@@ -1,0 +1,17 @@
+# Robots.txt for CharmingHub
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /policies.html
+Allow: /style.css
+Allow: /script.js
+Allow: /images/
+
+# Prevent search engines from indexing private admin sections
+Disallow: /admin.html
+Disallow: /admin.js
+Disallow: /admin-login.html
+Disallow: /admin-login.js
+Disallow: /api/
+
+Sitemap: /sitemap.xml
